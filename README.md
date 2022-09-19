@@ -1,2 +1,2 @@
-# SDV-602-Project
-Project house for SDV-602 2022
+# SDV602-MOB
+Repository to house my project for SDV602 and work towards this project 
