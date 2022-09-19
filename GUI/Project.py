@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
 Ukrainian food price application
 Designer: Matthew Burton 
@@ -22,12 +23,14 @@ The application uses the libraries:
 
 Enjoy! 
 """
+=======
+>>>>>>> 6c969a4dbfb7e5a1ad7cb6dfa02df7dcdb54034a
 import PySimpleGUI as sg
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-
+import Common as common
 # Set the theme for the application 
-sg.theme('DarkTeal10')
+sg.theme(common.theme)
 
 # Some test data 
 years = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
