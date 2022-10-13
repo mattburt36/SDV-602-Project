@@ -17,8 +17,6 @@ test_prices = [15, 17, 19, 20, 16, 19, 22, 40, 45]
 graph_flag = 0
 window_flag = 0
 district_name = 'Kyiv'
-begin_date = 0
-end_date = 0
 
 # Read the data from the CSV folder of "Ukrainian_food" and store in a variable that will not be altered 
 food_data_frame = pd.read_csv('Ukrainian_food.csv', low_memory=False)

@@ -53,6 +53,8 @@ def generate_districts():
 
     # Remove some values I won't be using 
     res.remove("Kyiv city")
+    res.remove("Kirovohrad")
+    res.remove("m. Sevastopol")
 
     return res
 
@@ -72,3 +74,11 @@ def generate_dates():
     res = list(set(com.date_list))
     res.sort()
     return res
+
+def find_averages(commodity):
+    """
+    This function is designed to return average costs for each year for each type of commodity passed 
+    """
+    res = 0
+    
+    return res 
