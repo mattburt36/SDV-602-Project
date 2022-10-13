@@ -8,11 +8,10 @@ This is my application for NMIT Semester 2 of 2022, SDV602 class tutored by Todd
 The intention of this application is to track the prices of food in the war torn country of the Ukraine. I do not personally agree with any form of war, I am just studying the effects
 on the people in different areas of the Ukraine that are affected by the war. 
 
-This application may take a dataset of any country and produce results to be displayed graphically on the prices of items, in the future I aim to make this application have the ability 
+This application may take a dataset of the Ukraine and produce results to be displayed graphically on the prices of items, in the future I aim to make this application have the ability 
 to adapt to different countries and different options datasets allow. 
 
-This application's current state is a test state, having completed the skeleton and inserted test data to display on a graph inside of a GUI, in future it will work with a dataset 
-provided to display actual food price records and a secondary dataset to convert currencies accurately
+This application's current state is a test state, accepting a dataset which produces results graphically on the prices of foods selected from a list 
 
 The application uses the libraries:
     - PySimpleGUI   (For layout and presentation of windows in graphical user interface)
@@ -25,10 +24,8 @@ I have stored manipulatable data in a 'Model' file, this is to keep data organis
 
 Enjoy! 
 """
-from tkinter import messagebox
 import Common as com
 import View as view
-import Model as mod
 
 window = view.create_window()
 
@@ -45,8 +42,8 @@ if __name__ == "__main__":
             if event == "Exit":
                 break
             if event == "Login":
-                print(mod.generate_districts(com.food_data_frame))
                 # check credentials, close last window, open the main screen
+                # print(com.date_list)
                 com.window_flag = 1 
                 # close previous window 
                 window.close()

@@ -1,4 +1,3 @@
-import dis
 import Common as com
 
 def generate_layout():
@@ -17,15 +16,15 @@ def generate_layout():
     elif com.window_flag == 1:        
         MainScreenColumn1 = [
                                 [com.sg.Text("Region")],
-                                [com.sg.Combo(["Cherkasy","Chernihiv","Chernivtsi","Dnipro","Donetsk","Ivano-Frankivsk","Kharkiv","Kherson","Khmelnytskyi","Kropyvnytskyi","Kyiv","Luhansk","Lutsk","Lviv","Mykolaiv","Odesa","Poltava","Rivne","Simferopol","Sumy","Ternopil","Uzhhorod","Vinnytsia","Zaporizhzhia","Zhytomyr"],default_value="Kyiv",key="district",size=(30,1))],
+                                [com.sg.Combo(generate_districts(),default_value="Kyiv",key="district",size=(30,1))],
                                 [com.sg.Text("Beginning date")],
-                                [com.sg.Combo(["2014","2015","2016","2017","2018","2019","2020","2021","2022"],default_value="2014",size=(30,1))],
+                                [com.sg.Combo(generate_dates(),default_value="2014",size=(30,1))],
                                 [com.sg.Text("Ending date")],
-                                [com.sg.Combo(["2014","2015","2016","2017","2018","2019","2020","2021","2022"],default_value="2022",size=(30,1))],
+                                [com.sg.Combo(generate_dates(),default_value="2022",size=(30,1))],
                                 [com.sg.Text("Currency")],
                                 [com.sg.Combo(["NZD","USD","EUR","JPY","GBP","AUD","CAD","CHF","CNY","HKD","SEK","KRW","SGD","NOK","MXN","INR","RUB","ZAR","TRY","BRL","TWD","DKK","PLN","THB","IDR","HUF","CZK","ILS","CLP","PHP","AED","COP","SAR","MYR","RON"],default_value='NZD',size=(30,1))],
                                 [com.sg.Text("Select foods below to display")],
-                                [com.sg.Listbox(values=["Fuel(petrol)","Milk","Potatoes","Rice","Onions","Cabbage","Carrots","Beetroot","Apples","Sugar","Beef","Chicken","Fish","Pork","Eggs","Flour","Oil(sunflower)","Anti-biotics"], select_mode="multiple", key="food", size=(30,10))],
+                                [com.sg.Listbox(values=generate_food(), select_mode="multiple", key="food", size=(30,10))],
                                 [com.sg.Button("Change graph")],
                                 [com.sg.Button("Display region")]
                             ]
@@ -44,17 +43,32 @@ def generate_layout():
 
     return layout
 
-def generate_districts(df):
+def generate_districts():
     """
     This function is designed to generate the available districts to view statistics for and return these
     districts in a list of values to be displayed in a combo box
     """
-    # Init to empty list 
     # Drop duplicate district names 
-    district_list = df['market'].tolist()
-    res = list(set(district_list))
+    res = list(set(com.district_list))
 
     # Remove some values I won't be using 
-    res.remove("#loc+market+name")
     res.remove("Kyiv city")
+
+    return res
+
+def generate_food():
+    """
+    This function is designed to generate a list of food items to be chosen from, from a dataframe to be displayed in a listbox 
+    """
+    # Drop duplicate district names 
+    res = list(set(com.commodity_list))
+
+    return res
+
+def generate_dates():
+    """
+    This function is designed to return a list of years 
+    """
+    res = list(set(com.date_list))
+    res.sort()
     return res
