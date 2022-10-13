@@ -15,17 +15,20 @@ commodity_list = food_data_frame['commodity'].tolist()
 year_list = food_data_frame['year'].to_list()
 price_list = food_data_frame['price'].to_list()
 
-commodity_list_2014 = food_data_frame.query("year == 2014")['commodity'].tolist()
-price_list_2014 = food_data_frame.query("year == 2014")['price'].tolist()
+def find_average(year, food):
 
-# Bring the values of both lists together into a list of arrays 
-zipped_2014 = list(zip(commodity_list_2014, price_list_2014))
+    commodity_list_local = food_data_frame.query(f'year == {year}')['commodity'].tolist()
+    price_list_local = food_data_frame.query(f'year == {year}')['price'].tolist()
+    # Bring the values of both lists together into a list of arrays 
+    zipped = list(zip(commodity_list_local , price_list_local))
 
-res = [item for item in zipped_2014 if item[0] == 'Milk']
+    res = [item for item in zipped if item[0] == food]
 
-average = sum(float(n[1]) for n in res) / len(res)
+    average = sum(float(n[1]) for n in res) / len(res)
 
-print(average)
+    return round(average, 2)
+
+print(find_average(2016,'Milk'))
 
 """
 def create_plot(x, y):
