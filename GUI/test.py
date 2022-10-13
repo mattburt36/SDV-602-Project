@@ -18,9 +18,14 @@ price_list = food_data_frame['price'].to_list()
 commodity_list_2014 = food_data_frame.query("year == 2014")['commodity'].tolist()
 price_list_2014 = food_data_frame.query("year == 2014")['price'].tolist()
 
+# Bring the values of both lists together into a list of arrays 
+zipped_2014 = list(zip(commodity_list_2014, price_list_2014))
 
+res = [item for item in zipped_2014 if item[0] == 'Milk']
 
-print(len(commodity_list_2014), len(price_list_2014))
+average = sum(float(n[1]) for n in res) / len(res)
+
+print(average)
 
 """
 def create_plot(x, y):
