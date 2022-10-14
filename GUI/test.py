@@ -1,3 +1,4 @@
+from decimal import *
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -16,25 +17,43 @@ year_list = food_data_frame['year'].to_list()
 price_list = food_data_frame['price'].to_list()
 
 def find_average(year, food):
-
+    """
+    Function designed to return the average price of a food item for a year 
+    """
+    # Query the CSV file and retrieve the lists of commodities prices based on the year passed to this function 
     commodity_list_local = food_data_frame.query(f'year == {year}')['commodity'].tolist()
     price_list_local = food_data_frame.query(f'year == {year}')['price'].tolist()
+
     # Bring the values of both lists together into a list of arrays 
     zipped = list(zip(commodity_list_local , price_list_local))
 
-    res = [item for item in zipped if item[0] == food]
+    # Create a list of the values correlating with the food/commodity passed to the function
+    food_item_list = [i for i in zipped if i[0] == food]
 
-    average = sum(float(n[1]) for n in res) / len(res)
+    # Find the average of the sum of the values stored in the food item list for that particular food 
+    if len(food_item_list) > 0:
+        avg = sum(Decimal(n[1]) for n in food_item_list) / len(food_item_list)
+    else:
+        avg = 0
 
-    return round(average, 2)
+    return round(avg, 2)
 
-print(find_average(2016,'Milk'))
+years = list(set(year_list))
+years.sort()
+foods = list(set(commodity_list))
+foods.sort()
 
-"""
+for y in years:
+    print(y)
+    for i in foods:
+        f = i
+        print(f, " : ", find_average(y, f))
+
+  
 def create_plot(x, y):
-
+    """
     Function to plot graph values, switch between types of graph to be plotted 
-
+    """
     # Dispose any past graphs that were plotted 
     plt.cla()
     
@@ -49,4 +68,3 @@ def create_plot(x, y):
     return plt.gcf()
 
 create_plot()
-"""
