@@ -18,9 +18,9 @@ def generate_layout():
                                 [com.sg.Text("Region")],
                                 [com.sg.Combo(generate_districts(),default_value="Kyiv",key="district",size=(30,1))],
                                 [com.sg.Text("Beginning date")],
-                                [com.sg.Combo(generate_dates(),default_value="2014",size=(30,1))],
+                                [com.sg.Combo(generate_dates(),default_value="2014",size=(30,1), key='begin')],
                                 [com.sg.Text("Ending date")],
-                                [com.sg.Combo(generate_dates(),default_value="2022",size=(30,1))],
+                                [com.sg.Combo(generate_dates(),default_value="2022",size=(30,1), key='end')],
                                 [com.sg.Text("Currency")],
                                 [com.sg.Combo(["NZD","USD","EUR","JPY","GBP","AUD","CAD","CHF","CNY","HKD","SEK","KRW","SGD","NOK","MXN","INR","RUB","ZAR","TRY","BRL","TWD","DKK","PLN","THB","IDR","HUF","CZK","ILS","CLP","PHP","AED","COP","SAR","MYR","RON"],default_value='NZD',size=(30,1))],
                                 [com.sg.Text("Select foods below to display")],
@@ -75,10 +75,24 @@ def generate_dates():
     res.sort()
     return res
 
-def find_averages(commodity):
+def find_average(year, food):
     """
-    This function is designed to return average costs for each year for each type of commodity passed 
+    Function designed to return the average price of a food item for a year 
     """
-    res = 0
-    
-    return res 
+    # Query the CSV file and retrieve the lists of commodities prices based on the year passed to this function 
+    commodity_list_local = com.food_data_frame.query(f'year == {year}')['commodity'].tolist()
+    price_list_local = com.food_data_frame.query(f'year == {year}')['price'].tolist()
+
+    # Bring the values of both lists together into a list of arrays 
+    zipped = list(zip(commodity_list_local , price_list_local))
+
+    # Create a list of the values correlating with the food/commodity passed to the function
+    food_item_list = [i for i in zipped if i[0] == food]
+
+    # Find the average of the sum of the values stored in the food item list for that particular food 
+    if len(food_item_list) > 0:
+        avg = sum(com.Decimal(n[1]) for n in food_item_list) / len(food_item_list)
+    else:
+        avg = 0
+
+    return round(avg, 2)

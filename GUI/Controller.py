@@ -48,7 +48,7 @@ if __name__ == "__main__":
                 # close previous window 
                 window.close()
                 window = view.create_window()
-                view.draw_graph(window["-CANVAS-"].TKCanvas, view.create_plot(com.test_years, com.test_prices, com.graph_flag))
+                view.draw_graph(window["-CANVAS-"].TKCanvas, view.create_plot(com.default_years, com.test_prices, com.graph_flag))
         # The system is in the main screen state, showing the secondarily generated screen  
         elif com.window_flag == 1:
             if event == "Change graph":
@@ -61,7 +61,7 @@ if __name__ == "__main__":
                 # close previous window 
                 window.close()
                 window = view.create_window()
-                view.draw_graph(window["-CANVAS-"].TKCanvas, view.create_plot(com.test_years, com.test_prices, com.graph_flag))
+                view.draw_graph(window["-CANVAS-"].TKCanvas, view.create_plot(com.default_years, com.test_prices, com.graph_flag))
 
             if event == "Display region":
                 # Show map screen 

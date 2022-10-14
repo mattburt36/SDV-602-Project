@@ -2,6 +2,7 @@ import PySimpleGUI as sg
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import pandas as pd
+from decimal import *
 
 theme = 'DarkTeal10'
 
@@ -10,7 +11,7 @@ sg.theme(theme)
 
 # Some test data 
 # TODO Replace this data with data from the CSV
-test_years = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
+default_years = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
 test_prices = [15, 17, 19, 20, 16, 19, 22, 40, 45]
 
 # Set some initial conditions  

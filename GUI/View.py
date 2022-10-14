@@ -24,7 +24,7 @@ def create_plot(x, y, flag):
         com.plt.bar(x,y,color="green")
         com.plt.plot()
 
-    com.plt.title("Food prices")
+    com.plt.title('Food prices')
     com.plt.xlabel("Year")
     com.plt.ylabel("Price ($)")
     com.plt.grid(True)
@@ -45,4 +45,4 @@ def create_window():
         return com.sg.Window("Main", layout, size=(900,500), finalize=True)     
     elif com.window_flag == 2:
         # Generate the map screen 
-        return com.sg.Window(com.district_name, layout)
+        return com.sg.Window(com.district_name, layout, no_titlebar=True)
