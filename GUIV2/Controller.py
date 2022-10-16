@@ -30,10 +30,50 @@ if __name__ == "__main__":
         #---------------------------------------------------------------------------------------------
         # Run state machine check on window_flag to control different events 
         #   - Login window:         window_flag == 0 
+        # The system is in the login screen state, showing the first screen      
+        if c.window_flag == 0:
+            if event == "Exit":
+                break
+            if event == "Login":
+                # check credentials, close last window, open the main screen
+                # print(com.date_list)
+                c.window_flag = 2 
+                # close previous window 
+                window.close()
+                window = v.create_window()
+
+        #---------------------------------------------------------------------------------------------
         #   - Registration window:  window_flag == 1
+        #   TODO ADD registration window here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        #---------------------------------------------------------------------------------------------
         #   - Graph window:         window_flag == 2
+                # The system is in the main screen state, showing the secondarily generated screen  
+        elif c.window_flag == 2:
+            if event == "Change graph":  
+                # Switch the value of the graph in a simple state machine 
+                if c.graph_flag == 0:
+                    c.graph_flag = 1
+                elif c.graph_flag == 1:
+                    c.graph_flag = 0
+
+            if event == "Display region":
+                # Show map screen 
+                # Keep the main screen open but not interactive
+                # Set the district_name variable to be equal to the value of the combo box with the key "district" so that the correct district image may be produced 
+                c.district_name = values['district']
+                c.window_flag = 3
+                window = v.create_window()
+
+        #---------------------------------------------------------------------------------------------
         #   - Map window:           window_flag == 3
-        
+                # The system is in the map screen state, showing the thirdly generated screen  
+        elif c.window_flag == 3:
+            if event == "Exit to main" or event == c.sg.WIN_CLOSED():
+                # Show the main screen
+                c.window_flag = 2
+                window.close()
+                window = v.create_window()
+
     #-------------------------------------------------------------------------------------------------
     # Default to no window open once all conditions are satisfied 
     window.close()
