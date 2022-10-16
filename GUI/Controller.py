@@ -34,9 +34,11 @@ if __name__ == "__main__":
     # Application's main event loop 
     while True:
         event, values = window.read()
+
         # For any state the machine is in, if the window is closed, exit the application entirely
         if event == com.sg.WIN_CLOSED:
             break
+
         # The system is in the login screen state, showing the first screen      
         if com.window_flag == 0:
             if event == "Exit":
@@ -48,7 +50,8 @@ if __name__ == "__main__":
                 # close previous window 
                 window.close()
                 window = view.create_window()
-                view.draw_graph(window["-CANVAS-"].TKCanvas, view.create_plot(com.default_years, com.test_prices, com.graph_flag))        
+                view.draw_graph(window["-CANVAS-"].TKCanvas, view.create_plot(com.default_years, com.test_prices, com.graph_flag))  
+
         # The system is in the main screen state, showing the secondarily generated screen  
         elif com.window_flag == 1:
             if event == "Change graph":  
@@ -57,10 +60,9 @@ if __name__ == "__main__":
                     com.graph_flag = 1
                 elif com.graph_flag == 1:
                     com.graph_flag = 0
+                    
                 # TODO make this function refresh the graph canvas rather than close the whole screen 
                 # close previous window
-                com.plt.cla()
-                com.plt.clf()  
                 view.draw_graph(window["-CANVAS-"].TKCanvas, view.create_plot(com.default_years, com.test_prices, com.graph_flag))
 
             if event == "Display region":
