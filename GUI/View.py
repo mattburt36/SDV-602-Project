@@ -5,7 +5,7 @@ def draw_graph(canvas, figure):
     """
     Function to draw a graph 
     """
-    figure_canvas_agg = com.FigureCanvasTkAgg(figure, canvas)
+    figure_canvas_agg = com.FigureCanvasTkAgg(figure, canvas)    
     figure_canvas_agg.draw()
     figure_canvas_agg.get_tk_widget().pack(side="top", fill="both", expand=1)
     return figure_canvas_agg
@@ -14,8 +14,10 @@ def create_plot(x, y, flag):
     """
     Function to plot graph values, switch between types of graph to be plotted 
     """
+
     # Dispose any past graphs that were plotted 
     com.plt.cla()
+    com.plt.clf()
 
     # State machine to switch between bar graph plotting and line graph plotting 
     if flag == 0:

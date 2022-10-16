@@ -1,4 +1,5 @@
 from decimal import *
+from time import sleep
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -16,19 +17,20 @@ commodity_list = food_data_frame['commodity'].tolist()
 year_list = food_data_frame['year'].to_list()
 price_list = food_data_frame['price'].to_list()
 
-def find_average(year, food):
+def find_average(year, food, market):
     """
     Function designed to return the average price of a food item for a year 
     """
     # Query the CSV file and retrieve the lists of commodities prices based on the year passed to this function 
     commodity_list_local = food_data_frame.query(f'year == {year}')['commodity'].tolist()
     price_list_local = food_data_frame.query(f'year == {year}')['price'].tolist()
+    market_list_local = food_data_frame.query(f'year == {year}')['market'].tolist()
 
     # Bring the values of both lists together into a list of arrays 
-    zipped = list(zip(commodity_list_local , price_list_local))
+    zipped = list(zip(commodity_list_local , price_list_local, market_list_local))
 
     # Create a list of the values correlating with the food/commodity passed to the function
-    food_item_list = [i for i in zipped if i[0] == food]
+    food_item_list = [i for i in zipped if i[0] == food and i[2] == market]
 
     # Find the average of the sum of the values stored in the food item list for that particular food 
     if len(food_item_list) > 0:
@@ -38,16 +40,20 @@ def find_average(year, food):
 
     return round(avg, 2)
 
+# Sort list of fods and years
 years = list(set(year_list))
 years.sort()
 foods = list(set(commodity_list))
 foods.sort()
+places = list(set(district_list))
+places.sort()
 
 for y in years:
     print(y)
-    for i in foods:
-        f = i
-        print(f, " : ", find_average(y, f))
+    for j in places:
+        print(j)
+        for i in foods:
+            print(i, " : ", find_average(y, i, j))
 
   
 def create_plot(x, y):
@@ -66,5 +72,3 @@ def create_plot(x, y):
     plt.show()
 
     return plt.gcf()
-
-create_plot()

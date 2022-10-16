@@ -48,19 +48,19 @@ if __name__ == "__main__":
                 # close previous window 
                 window.close()
                 window = view.create_window()
-                view.draw_graph(window["-CANVAS-"].TKCanvas, view.create_plot(com.default_years, com.test_prices, com.graph_flag))
+                view.draw_graph(window["-CANVAS-"].TKCanvas, view.create_plot(com.default_years, com.test_prices, com.graph_flag))        
         # The system is in the main screen state, showing the secondarily generated screen  
         elif com.window_flag == 1:
-            if event == "Change graph":
+            if event == "Change graph":  
                 # Switch the value of the graph that is plotted 
                 if com.graph_flag == 0:
                     com.graph_flag = 1
                 elif com.graph_flag == 1:
                     com.graph_flag = 0
                 # TODO make this function refresh the graph canvas rather than close the whole screen 
-                # close previous window 
-                window.close()
-                window = view.create_window()
+                # close previous window
+                com.plt.cla()
+                com.plt.clf()  
                 view.draw_graph(window["-CANVAS-"].TKCanvas, view.create_plot(com.default_years, com.test_prices, com.graph_flag))
 
             if event == "Display region":
