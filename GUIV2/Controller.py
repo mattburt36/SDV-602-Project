@@ -1,95 +1,87 @@
 """
-This file houses the controls the user will utilise when the application is being executed (the main for loop for the GUI)\
-This file has scope of the View.py file to 'watch' what users are doing with what information 
-
-This file is where the code execution begins/ends, start execution here 
+Initialise execution from this file 
 """
-import Common as c 
-import View as v
+import Common as com
+import View as view
 
-#-----------------------------------------------------------------------------------------------------
-# Instantiate the window 
-window = v.create_window()
+window = view.create_window()
 
-#-----------------------------------------------------------------------------------------------------
-# Initialize the main loop
 if __name__ == "__main__":
-    while True: 
-        #---------------------------------------------------------------------------------------------
-        # Assign the events variable to window.read() to track event and value changes on the GUI 
+
+    # Application's main event loop 
+    while True:
         event, values = window.read()
 
-        #---------------------------------------------------------------------------------------------
-        # Regardless of state, given that the form is closed, exit the main loop and application 
-        if event == c.sg.WIN_CLOSED:
+        # For any state the machine is in, if the window is closed, exit the application entirely
+        if event == com.sg.WIN_CLOSED:
             break
 
-        # Run state machine check on window_flag to control different events 
-        #   - Login window:         window_flag == 0 
         # The system is in the login screen state, showing the first screen      
-        if c.window_flag == 0:
+        if com.window_flag == 0:
             if event == "Exit":
                 break
             if event == "Login":
                 # check credentials, close last window, open the main screen
-                c.window_flag = 2 
+                # print(com.date_list)
+                com.window_flag = 1 
                 # close previous window 
                 window.close()
-                window = v.create_window()
+                window = view.create_window()
+                view.draw_graph(window["-CANVAS-"].TKCanvas, view.create_plot(com.graph_years_list, com.graph_flag))
 
-        #---------------------------------------------------------------------------------------------
-        #   - Registration window:  window_flag == 1
-        #     TODO ADD registration window here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        #---------------------------------------------------------------------------------------------
-        #   - Graph window:         window_flag == 2
-                # The system is in the main screen state, showing the secondarily generated screen  
-        elif c.window_flag == 2:
+        # The system is in the main screen state, showing the secondarily generated screen  
+        elif com.window_flag == 1:
             if event == "Change graph ":  
-                # Switch the value of the graph in a simple state machine 
-                if c.graph_flag == 0:
-                    c.graph_flag = 1
-                elif c.graph_flag == 1:
-                    c.graph_flag = 0
-
-                # Assign a variable the list of commodities chosen 
-                c.selected_commodity = window['commodity'].get()
+                # Switch the value of the graph that is plotted 
+                if com.graph_flag == 0:
+                    com.graph_flag = 1
+                elif com.graph_flag == 1:
+                    com.graph_flag = 0
+                    
+                # TODO make this function refresh the graph canvas rather than close the whole screen 
+                # close previous window
+                # Assign a variable the commodity chosen 
+                com.district_name = values['district']
+                com.selected_commodity = values['food']
 
                 # Produce the other graph with the selected items 
-                c.begin_year = values['begin']
-                c.end_year = values['end']
-                
-                # Refresh the window     
+                com.begin_year = values['begin']
+                com.end_year = values['end']
+
+                # Refresh
                 window.close()
-                window = v.create_window()
-                v.draw_figure(window["-CANVAS-"].TKCanvas, v.create_plot(c.graph_years_list, c.graph_price_list, c.graph_flag))
+                window = view.create_window()
+                view.draw_graph(window["-CANVAS-"].TKCanvas, view.create_plot(com.graph_years_list, com.graph_flag))
 
             if event == "Display region":
                 # Show map screen 
                 # Keep the main screen open but not interactive
-                # Set the district_name variable to be equal to the value of the combo box with the key "district" so that the correct district image may be produced 
-                c.district_name = values['district']
-                c.window_flag = 3
-                window = v.create_window()
+                # Set the district_name variable to be equal to the value of the combo box with the key "district"
+                com.district_name = values['district']
+                com.window_flag = 2
+                window = view.create_window()
 
             if event == "Refresh graph ":
-                # Refresh the window     
-                window.close()
-                window = v.create_window()
+                com.district_name = values['district']
+                com.selected_commodity = values['food']
+
                 # Produce the other graph with the selected items 
-                c.begin_year = values['begin']
-                c.end_year = values['end']
-                # v.draw_figure(window["-CANVAS-"].TKCanvas, v.create_plot(c.graph_years_list, c.test_prices, c.graph_flag))
+                com.begin_year = values['begin']
+                com.end_year = values['end']
 
-        #---------------------------------------------------------------------------------------------
-        #   - Map window:           window_flag == 3
-                # The system is in the map screen state, showing the thirdly generated screen  
-        elif c.window_flag == 3:
-            if event == "Exit to main" or event == c.sg.WIN_CLOSED():
-                # Show the main screen
-                c.window_flag = 2
+                # Refresh
                 window.close()
-                window = v.create_window()
+                window = view.create_window()
+                view.draw_graph(window["-CANVAS-"].TKCanvas, view.create_plot(com.graph_years_list, com.graph_flag))
 
-    #-------------------------------------------------------------------------------------------------
-    # Default to no window open once all conditions are satisfied 
-    window.close()
+        # The system is in the map screen state, showing the thirdly generated screen  
+        elif com.window_flag == 2:
+            if event == "Exit to main":
+                # Show the main screen
+                com.window_flag = 1
+                window.close()
+                window = view.create_window()
+                view.draw_graph(window["-CANVAS-"].TKCanvas, view.create_plot(com.graph_years_list, com.graph_flag))
+
+    # Default state once conditions are satisfied 
+    window.close() 
