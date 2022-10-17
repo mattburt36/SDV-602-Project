@@ -75,24 +75,29 @@ def generate_dates():
     res.sort()
     return res
 
-def find_average(year, food):
+def find_average(year, food, market):
     """
     Function designed to return the average price of a food item for a year 
     """
-    # Query the CSV file and retrieve the lists of commodities prices based on the year passed to this function 
-    commodity_list_local = com.food_data_frame.query(f'year == {year}')['commodity'].tolist()
-    price_list_local = com.food_data_frame.query(f'year == {year}')['price'].tolist()
+    res = []
+    for index in range(len(year)):
+        # Query the CSV file and retrieve the lists of commodities prices based on the year passed to this function 
+        commodity_list_local = com.food_data_frame.query(f'year == {year[index]}')['commodity'].tolist()
+        price_list_local = com.food_data_frame.query(f'year == {year[index]}')['price'].tolist()
+        market_list_local = com.food_data_frame.query(f'year == {year[index]}')['market'].tolist()
 
-    # Bring the values of both lists together into a list of arrays 
-    zipped = list(zip(commodity_list_local , price_list_local))
+        # Bring the values of both lists together into a list of arrays 
+        zipped = list(zip(commodity_list_local , price_list_local, market_list_local))
 
-    # Create a list of the values correlating with the food/commodity passed to the function
-    food_item_list = [i for i in zipped if i[0] == food]
+        # Create a list of the values correlating with the food/commodity passed to the function
+        food_item_list = [i for i in zipped if i[0] == food and i[2] == market]
 
-    # Find the average of the sum of the values stored in the food item list for that particular food 
-    if len(food_item_list) > 0:
-        avg = sum(com.Decimal(n[1]) for n in food_item_list) / len(food_item_list)
-    else:
-        avg = 0
+        # Find the average of the sum of the values stored in the food item list for that particular food 
+        if len(food_item_list) > 0:
+            avg = sum(com.Decimal(n[1]) for n in food_item_list) / len(food_item_list)
+        else:
+            avg = 0
 
-    return round(avg, 2)
+        res.append(int(round(avg,2)))
+
+    return res

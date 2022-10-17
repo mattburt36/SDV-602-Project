@@ -18,6 +18,10 @@ test_prices = [15, 17, 19, 20, 16, 19, 22, 40, 45]
 graph_flag = 0
 window_flag = 0
 district_name = 'Kyiv'
+selected_commodity = 'Milk'
+begin_year = 2014
+end_year = 2022
+graph_years_list = list(range(begin_year, (end_year + 1)))
 
 # Read the data from the CSV folder of "Ukrainian_food" and store in a variable that will not be altered 
 food_data_frame = pd.read_csv('Ukrainian_food.csv', low_memory=False)

@@ -2,15 +2,35 @@
 This file contains the software which presents information to the user
 It has the scope of the Model.py file, to recieve what information to be displayed to the user 
 """
-
 import Common as c 
 import Model as m 
 
-def draw_graph():
-    return 
+def draw_figure(canvas, figure):    
+    figure_canvas_agg = c.FigureCanvasTkAgg(figure, canvas)
+    figure_canvas_agg.draw()
+    figure_canvas_agg.get_tk_widget().pack(side='top', fill='both', expand=1)
+    return figure_canvas_agg
 
-def create_plot():
-    return 
+def create_plot(x, y, flag):
+    """
+    Function to plot graph values, switch between types of graph to be plotted 
+    """
+    # Dispose any past graphs that were plotted 
+    c.plt.cla()
+    c.plt.clf()
+    
+    # State machine to switch between bar graph plotting and line graph plotting 
+    if flag == 0:
+        c.plt.plot(x, y, color="blue", marker="o")
+    elif flag == 1: 
+        c.plt.bar(x,y,color="green")
+        c.plt.plot()
+
+    c.plt.title(f'Food prices: {c.district_list}')
+    c.plt.xlabel("Years")
+    c.plt.ylabel("Price")
+    c.plt.grid(True)
+    return c.plt.gcf()
 
 def create_window():
     """
@@ -25,7 +45,7 @@ def create_window():
     # INSERT REGISTRATION FORM HERE
     elif c.window_flag == 2:
         # Generate a new main screen 
-        return c.sg.Window("Graph", layout, size=(900,500), finalize=True)     
+        return c.sg.Window("Graph", layout, size=(900,525), finalize=True)     
     elif c.window_flag == 3:
         # Generate the map screen 
         return c.sg.Window(c.district_name, layout, no_titlebar=True)

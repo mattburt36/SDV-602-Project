@@ -50,7 +50,6 @@ if __name__ == "__main__":
                 # close previous window 
                 window.close()
                 window = view.create_window()
-                view.draw_graph(window["-CANVAS-"].TKCanvas, view.create_plot(com.default_years, com.test_prices, com.graph_flag))  
 
         # The system is in the main screen state, showing the secondarily generated screen  
         elif com.window_flag == 1:
@@ -63,7 +62,16 @@ if __name__ == "__main__":
                     
                 # TODO make this function refresh the graph canvas rather than close the whole screen 
                 # close previous window
-                view.draw_graph(window["-CANVAS-"].TKCanvas, view.create_plot(com.default_years, com.test_prices, com.graph_flag))
+                # Assign a variable the list of commodities chosen 
+                com.selected_commodity = window['food'].get()
+
+                # Produce the other graph with the selected items 
+                com.begin_year = values['begin']
+                com.end_year = values['end']
+
+                window.close()
+                window = view.create_window()
+                view.draw_graph(window["-CANVAS-"].TKCanvas, view.create_plot(com.graph_years_list, com.graph_flag))
 
             if event == "Display region":
                 # Show map screen 

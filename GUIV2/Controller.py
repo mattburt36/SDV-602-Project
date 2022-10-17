@@ -24,10 +24,6 @@ if __name__ == "__main__":
         if event == c.sg.WIN_CLOSED:
             break
 
-        #---------------------------------------------------------------------------------------------
-        # Run a constant update on the graph being displayed, based on changes of any kind in the GUI
-
-        #---------------------------------------------------------------------------------------------
         # Run state machine check on window_flag to control different events 
         #   - Login window:         window_flag == 0 
         # The system is in the login screen state, showing the first screen      
@@ -36,7 +32,6 @@ if __name__ == "__main__":
                 break
             if event == "Login":
                 # check credentials, close last window, open the main screen
-                # print(com.date_list)
                 c.window_flag = 2 
                 # close previous window 
                 window.close()
@@ -44,17 +39,29 @@ if __name__ == "__main__":
 
         #---------------------------------------------------------------------------------------------
         #   - Registration window:  window_flag == 1
-        #   TODO ADD registration window here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        #     TODO ADD registration window here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         #---------------------------------------------------------------------------------------------
         #   - Graph window:         window_flag == 2
                 # The system is in the main screen state, showing the secondarily generated screen  
         elif c.window_flag == 2:
-            if event == "Change graph":  
+            if event == "Change graph ":  
                 # Switch the value of the graph in a simple state machine 
                 if c.graph_flag == 0:
                     c.graph_flag = 1
                 elif c.graph_flag == 1:
                     c.graph_flag = 0
+
+                # Assign a variable the list of commodities chosen 
+                c.selected_commodity = window['commodity'].get()
+
+                # Produce the other graph with the selected items 
+                c.begin_year = values['begin']
+                c.end_year = values['end']
+                
+                # Refresh the window     
+                window.close()
+                window = v.create_window()
+                v.draw_figure(window["-CANVAS-"].TKCanvas, v.create_plot(c.graph_years_list, c.graph_price_list, c.graph_flag))
 
             if event == "Display region":
                 # Show map screen 
@@ -63,6 +70,15 @@ if __name__ == "__main__":
                 c.district_name = values['district']
                 c.window_flag = 3
                 window = v.create_window()
+
+            if event == "Refresh graph ":
+                # Refresh the window     
+                window.close()
+                window = v.create_window()
+                # Produce the other graph with the selected items 
+                c.begin_year = values['begin']
+                c.end_year = values['end']
+                # v.draw_figure(window["-CANVAS-"].TKCanvas, v.create_plot(c.graph_years_list, c.test_prices, c.graph_flag))
 
         #---------------------------------------------------------------------------------------------
         #   - Map window:           window_flag == 3
