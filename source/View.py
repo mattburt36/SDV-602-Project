@@ -1,3 +1,4 @@
+from xml.etree.ElementTree import tostring
 import Common as com
 import Model as mod
 
@@ -19,6 +20,7 @@ def create_plot(x, flag):
     com.plt.clf()
     y = mod.find_average(com.graph_years_list, com.selected_commodity, com.district_name)
 
+    # print(y,com.selected_commodity)
     # State machine to switch between bar graph plotting and line graph plotting 
     if flag == 0:
         com.plt.plot(x, y, color="blue", marker="o")
@@ -26,7 +28,7 @@ def create_plot(x, flag):
         com.plt.bar(x,y,color="green")
         com.plt.plot()
 
-    com.plt.title('Food prices')
+    com.plt.title(f'Average price of {com.selected_commodity} in {com.district_name}')
     com.plt.xlabel("Year")
     com.plt.ylabel("Price ($)")
     com.plt.grid(True)
@@ -44,7 +46,7 @@ def create_window():
         return com.sg.Window("Login", layout, element_justification='c')
     elif com.window_flag == 1:
         # Generate a new main screen 
-        return com.sg.Window("Main", layout, size=(900,500), finalize=True)     
+        return com.sg.Window("Main", layout, size=(900,525), finalize=True)     
     elif com.window_flag == 2:
         # Generate the map screen 
         return com.sg.Window(com.district_name, layout, no_titlebar=True)

@@ -24,9 +24,10 @@ def generate_layout():
                                 [com.sg.Text("Currency")],
                                 [com.sg.Combo(["NZD","USD","EUR","JPY","GBP","AUD","CAD","CHF","CNY","HKD","SEK","KRW","SGD","NOK","MXN","INR","RUB","ZAR","TRY","BRL","TWD","DKK","PLN","THB","IDR","HUF","CZK","ILS","CLP","PHP","AED","COP","SAR","MYR","RON"],default_value='NZD',size=(30,1))],
                                 [com.sg.Text("Select foods below to display")],
-                                [com.sg.Listbox(values=generate_food(), select_mode="multiple", key="food", size=(30,10))],
-                                [com.sg.Button("Change graph")],
-                                [com.sg.Button("Display region")]
+                                [com.sg.Combo(generate_food(), default_value="Milk", key="food", size=(30,10))],
+                                [com.sg.Button("Change graph ")],
+                                [com.sg.Button("Display region")],
+                                [com.sg.Button("Refresh graph ")]
                             ]
         MainScreenColumn2 = [   
                                 # Graph goes here 
@@ -97,7 +98,6 @@ def find_average(year, food, market):
             avg = sum(com.Decimal(n[1]) for n in food_item_list) / len(food_item_list)
         else:
             avg = 0
-
-        res.append(int(round(avg,2)))
+        res.append(round(avg,2))
 
     return res

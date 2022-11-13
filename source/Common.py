@@ -9,11 +9,6 @@ theme = 'DarkTeal10'
 # Set the theme for the application 
 sg.theme(theme)
 
-# Some test data 
-# TODO Replace this data with data from the CSV
-default_years = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022]
-test_prices = [15, 17, 19, 20, 16, 19, 22, 40, 45]
-
 # Set some initial conditions  
 graph_flag = 0
 window_flag = 0
