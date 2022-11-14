@@ -1,12 +1,17 @@
 """
 Controller module
 """
+
+from model import Model
+from view import View
+
 class Controller: 
     def __init__(self):
-        pass
+        self.model = Model()
+        self.view = View(self)
     
     def main(self):
-        print('from main')
+        self.view.main()
 
 if __name__ == '__main__':
     calculator = Controller()
