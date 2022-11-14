@@ -17,6 +17,7 @@ The application uses the libraries:
     - Pandas        (To manipulate and analyse data)
 
 This application follows the MVC pattern: 
+
     Model: manages the data and defines rules and behaviors. It represents the business logic of the application. The data can be stored in the Model itself or in a database (only the Model has access to the database).
 
     View: presents the data to the user. A View can be any kind of output representation: a HTML page, a chart, a table, or even a simple text output. A View should never call its own methods; only a Controller should do it.
