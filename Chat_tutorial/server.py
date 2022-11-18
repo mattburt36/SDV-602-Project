@@ -17,10 +17,12 @@ server.listen()
 clients = []
 nicknames = []
 
+
 # broadcast 
 def broadcast(message):
     for client in clients:
         client.send(message)
+
 
 # handle 
 def handle(client):
@@ -36,6 +38,7 @@ def handle(client):
             nickname = nicknames[index]
             nicknames.remove(nickname)
             break
+
 
 # receive 
 def receive():

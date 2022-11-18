@@ -3,12 +3,14 @@ import threading
 import tkinter
 import tkinter.scrolledtext
 from tkinter import simpledialog
+import gc
 
 HOST = 'localhost'
 PORT = 3000
 
+
 class Client:
-    
+
     def __init__(self, host, port):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.connect((host, port))
@@ -23,6 +25,8 @@ class Client:
 
         gui_thread = threading.Thread(target=self.gui_loop)
         receive_thread = threading.Thread(target=self.receive)
+
+        gc.collect()
 
         gui_thread.start()
         receive_thread.start()
@@ -47,7 +51,7 @@ class Client:
         self.input_area.pack(padx=20, pady=5)
 
         self.send_button = tkinter.Button(self.win, text="Send", command=self.write)
-        self.send_button.config(font=("Arial, 12"))
+        self.send_button.config(font=("Arial", 12))
         self.send_button.pack(padx=20, pady=5)
 
         self.gui_done = True
@@ -60,7 +64,6 @@ class Client:
         message = f"{self.nickname}: {self.input_area.get('1.0', 'end')}"
         self.sock.send(message.encode('utf-8'))
         self.input_area.delete('1.0', 'end')
-
     
     def stop(self):
         self.running = False
@@ -85,8 +88,7 @@ class Client:
             except:
                 print("Error")
                 self.sock.close()
-                break 
-                
+                break
 
 
 client = Client(HOST, PORT)
